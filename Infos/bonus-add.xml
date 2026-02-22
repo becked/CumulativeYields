@@ -1,0 +1,11 @@
+<Root>
+  <!-- Example: add a new bonus that grants +1 Culture per turn -->
+  <!-- See Reference/XML/Infos/ for vanilla bonus definitions -->
+  <!--
+  <Entry>
+    <zType>BONUS_MY_MOD_EXAMPLE</zType>
+    <iCultureRate>1</iCultureRate>
+    <Text>TEXT_BONUS_MY_MOD_EXAMPLE</Text>
+  </Entry>
+  -->
+</Root>

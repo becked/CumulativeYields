@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Entry>
+    <zType>TEXT_CUMULATIVE_YIELDS_SUB_RATE</zType>
+    <English>{0} Rate</English>
+  </Entry>
+  <Entry>
+    <zType>TEXT_CUMULATIVE_YIELDS_SUB_TOTAL</zType>
+    <English>{0} Cumulative</English>
+  </Entry>
+  <Entry>
+    <zType>TEXT_CUMULATIVE_YIELDS_TITLE_TOTAL</zType>
+    <English>{0} Cumulative</English>
+  </Entry>
+  <Entry>
+    <zType>TEXT_CUMULATIVE_YIELDS_TITLE_RATE</zType>
+    <English>{0} Rate</English>
+  </Entry>
+  <Entry>
+    <zType>TEXT_CUMULATIVE_YIELDS_PER_TURN</zType>
+    <English>Per Turn:</English>
+  </Entry>
+  <Entry>
+    <zType>TEXT_CUMULATIVE_YIELDS_RATE_VALUE</zType>
+    <English>{0}/Year</English>
+  </Entry>
+</Root>

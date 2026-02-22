@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  powershell-windows:
+    name: PowerShell (Windows)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PSScriptAnalyzer
+        shell: pwsh
+        run: Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+
+      - name: Lint PowerShell scripts
+        shell: pwsh
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path scripts/*.ps1 -Settings PSGallery
+          if ($results) {
+            $results | Format-Table -AutoSize
+            throw "PSScriptAnalyzer found $($results.Count) issue(s)"
+          }
+          Write-Host "PSScriptAnalyzer: no issues found"
+
+      - name: Install Pester
+        shell: pwsh
+        run: Install-Module -Name Pester -Force -Scope CurrentUser -MinimumVersion 5.0 -SkipPublisherCheck
+
+      - name: Run Pester tests
+        shell: pwsh
+        run: |
+          $config = New-PesterConfiguration
+          $config.Run.Path = 'tests'
+          $config.Output.Verbosity = 'Detailed'
+          $config.Run.Exit = $true
+          Invoke-Pester -Configuration $config
+
+  bash-ubuntu:
+    name: Bash (Ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install xmllint
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
+      - name: Run validate.sh
+        run: ./scripts/validate.sh
+
+      - name: Test bump-version.sh
+        run: |
+          ./scripts/bump-version.sh patch
+          grep '<modversion>0.1.1</modversion>' ModInfo.xml
+          git checkout -- ModInfo.xml CHANGELOG.md

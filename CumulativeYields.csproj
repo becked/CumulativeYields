@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>CumulativeYields</AssemblyName>
+    <RootNamespace>CumulativeYields</RootNamespace>
+    <LangVersion>9.0</LangVersion>
+    <OutputType>Library</OutputType>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin/</OutputPath>
+  </PropertyGroup>
+
+  <!-- Platform-specific paths to game assemblies -->
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+    <OldWorldManagedPath>$(OldWorldPath)\OldWorld_Data\Managed</OldWorldManagedPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+    <OldWorldManagedPath>$(OldWorldPath)/OldWorld.app/Contents/Resources/Data/Managed</OldWorldManagedPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <OldWorldManagedPath>$(OldWorldPath)/OldWorld_Data/Managed</OldWorldManagedPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Source/**/*.cs" />
+  </ItemGroup>
+
+  <!-- Harmony via NuGet (remove if not using Harmony) -->
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.4.2" />
+  </ItemGroup>
+
+  <!-- Game assembly references (Private=false: don't copy to output) -->
+  <ItemGroup>
+    <Reference Include="TenCrowns.GameCore">
+      <HintPath>$(OldWorldManagedPath)/TenCrowns.GameCore.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mohawk.SystemCore">
+      <HintPath>$(OldWorldManagedPath)/Mohawk.SystemCore.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mohawk.UIInterfaces">
+      <HintPath>$(OldWorldManagedPath)/Mohawk.UIInterfaces.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(OldWorldManagedPath)/UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(OldWorldManagedPath)/UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
